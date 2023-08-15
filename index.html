@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Music App</title>
+    <script src="https://kit.fontawesome.com/75801edb24.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="music-player">
+            <nav>
+                <h2 style="color: rgb(0, 247, 255);text-align: center;width: 100%;font-family: 'Courier New', Courier, monospace;">Aouidat Musique</h2>
+            </nav>
+            
+            <img src="./صور-رجال-جديدة.png" class="song-img">
+            <h1  id="artist-name"></h1>
+            <audio  controls id="song">
+            </audio>
+            <input type="range" value="0" id="progress">
+
+
+            <div class="controls">
+                    <div><i class="fa-solid fa-backward"></i></div>
+                    <div onclick="playPause()"><i class="fa-solid fa-play" id="ctrlicon"></i></div>
+                    <div><i class="fa-solid fa-forward"></i></div>
+            </div>
+            <input type="range" value="100" id="volume">
+        </div>
+        <div class="controlss">
+            <!-- Add buttons for each song -->
+            <button id="songButton0" onclick="changeSong(0, 'Cheb Bilal - I Am Sorry')">Cheb Bilal - I Am Sorry</button>
+            <button id="songButton1" onclick="changeSong(1, 'Cheb Bello - nebghi nhawas  ')">Cheb Bello - Nebghi nhawas </button>
+            <button id="songButton2" onclick="changeSong(2, 'أغنية قرقابو الشهيرة لأولاد الحاجة مغنية')">أغنية قرقابو الشهيرة لأولاد الحاجة مغنية</button>
+            <button id="songButton3" onclick="changeSong(3, 'DJ-Kayz - La  Beauté Algerienne')">DJ Kayz - La  Beauté Algerienne</button>
+            <button id="songButton4" onclick="changeSong(4, 'L algerino - Va Bene مترجمة اغنية الجيرينو الجديدة')">L’algerino - Va Bene</button>
+            <button id="songButton5" onclick="changeSong(5, 'L’Algerino - Mention Max ')">L’ Algérino - Mention Max</button>
+            <button id="songButton6" onclick="changeSong(6, 'Moh Milano - Machafouhach')">Moh Milano - Machafouhach </button>
+            <button id="songButton7" onclick="changeSong(7, 'Opus - Live Is Life')">Opus - Live Is Life </button>
+            <button id="songButton8" onclick="changeSong(8, 'Shakira - Waka Waka ')">Shakira - Waka Waka </button>
+            <button id="songButton9" onclick="changeSong(9, 'Soolking ft. DYSTINCT - Y Dor')">Soolking ft. DYSTINCT - Y Dor</button>
+            <button id="songButton10" onclick="changeSong(10, 'Boney M. - Ma Baker عمي بنعودة ')">Boney M. - Ma Baker عمي بنعودة</button>
+            <button id="songButton11" onclick="changeSong(11, 'Boney M. - Daddy Cool ')">Boney M. - Daddy cool </button>
+            <button id="songButton12" onclick="changeSong(12, 'Cheb Reda - Senioreta  ')">Cheb Reda - Senioreta  </button>
+            <button id="songButton13" onclick="changeSong(13, 'Phil Collins - Another Day In Paradise')">Phil Collins - Another Day In Paradise  </button>
+            <button id="songButton14" onclick="changeSong(14, 'Gladiator - Now We Are Free ')">Gladiator - Now We Are Free </button>
+            <button id="songButton15" onclick="changeSong(15, 'Alpha Blondy & The Solar System - Sebe Allah')">Alpha Blondy & The Solar System - Sebe Allah </button>
+            <button id="songButton16" onclick="changeSong(16, 'Soolking - Sans visa ')">Soolking - Sans visa </button>
+            <button id="songButton17" onclick="changeSong(17, 'الشاب جلال غير ولي ورواحي Cheb Djalal ')">الشاب جلال غير ولي ورواحي Cheb Djalal</button>
+            <!-- Add more buttons as needed -->
+        </div>        
+    </div>
+
+    
+    <script>
+        let changes = document.getElementById("changes")
+        let progress = document.getElementById("progress");
+        let icon = document.getElementById("song");
+        let volume = document.getElementById("volume"); // Add this line
+        let ctrlicon = document.getElementById("ctrlicon");
+
+        let songs = [
+    "./Cheb Bilal - I Am Sorry.mp3",
+    "./Cheb Bello-Dj Moulay Nabghi Nhawas Ana© أغنية الصيف (clip officiel)🔥🥝🏖️🍍🥥.mp3",
+    "./أغنية قرقابو الشهيرة لأولاد الحاجة مغنية.mp3",
+    "./DJ Kayz feat. Souf & Mounir Kidadi - Beauté Algérienne (Clip Officiel).mp3",
+    "./Lalgerino - Va Bene مترجمة اغنية الجيرينو الجديدة.mp3",
+    "./L’ Algérino - Mention Max [Paroles-Lyrics].mp3",
+    "./moh.mp3",
+    "./Opus - Live Is Life (lyrics).mp3",
+    "./Shakira - Waka Waka (This Time for Africa) (The Official 2010 FIFA World Cup™ Song).mp3",
+    "./Soolking ft. Dystinct - Y Dor [Clip Officiel].mp3",
+    "./mix_4m40s (audio-joiner.com).mp3",
+    "./Boney M. - Daddy Cool (Sopot Festival 1979).mp3",
+    "./CLip Cheb Reda - Seniorita الشاب رضا - سنيوريتا AVM EDITION.mp3",
+    "./Phil Collins - Another Day In Paradise (Official Music Video).mp3",
+    "./Gladiator - Now We Are Free (TNT Records Remix) Remastered.mp3",
+    "./Alpha Blondy & The Solar System - Sebe Allah - LIVE at Afrikafestival Hertme 2018.mp3",
+    "./Soolking - Sans visa [Audio Officiel].mp3",
+    "./الشاب جلال غير ولي ورواحي Cheb Djalal - Ghir Wali wa Rwahi Remix Dj Tahar Pro.mp3",
+    // Add more song paths as needed
+];
+
+    let currentSongIndex = 0;
+    let h1 = document.getElementById("artist-name"); // Get the h1 element
+
+    function changeSong(index, artist) {
+        currentSongIndex = index;
+        song.src = songs[currentSongIndex];
+        currentSongIndex.classList.add("playing")
+        h1.innerText = artist; // Update the artist name
+        playPause();
+    }
+
+    function changeSong(index, artist) {
+    // Remove the color from all buttons
+    const buttons = document.querySelectorAll('.controlss button');
+    buttons.forEach(button => {
+        button.style.backgroundColor = ''; // Remove any previous color
+    });
+
+    // Set the color for the clicked button
+    const clickedButton = document.getElementById(`songButton${index}`);
+    clickedButton.style.backgroundColor = '#022b42'; // Change to your desired color
+    currentSongIndex = index;
+    song.src = songs[currentSongIndex];
+    h1.innerText = artist;
+    playPause();
+}
+
+
+
+
+
+
+
+
+        song.onloadedmetadata = function(){
+            progress.max = song.duration;
+            progress.value = song.currentTime;
+        }
+        function playPause(){
+            if(ctrlicon.classList.contains("fa-pause")){
+                song.pause();
+                ctrlicon.classList.remove("fa-pause");
+                ctrlicon.classList.add("fa-play");
+            }else{
+                song.play();
+                ctrlicon.classList.remove("fa-play");
+                ctrlicon.classList.add("fa-pause");
+            }
+        }
+
+
+        if(song.play()){
+            setInterval(()=>{
+            progress.value = song.currentTime;
+        },500);
+}
+
+progress.onchange = function(){
+    song.play();
+    progress.value = song.currentTime; 
+    ctrlicon.classList.remove("fa-play");
+    ctrlicon.classList.add("fa-pause");
+}
+
+
+
+
+volume.oninput = function() { // Volume control
+        song.volume = volume.value / 100;
+    };
+
+
+
+
+
+
+
+    function changeToPreviousSong() {
+        let newIndex = currentSongIndex - 1;
+        if (newIndex < 0) {
+            newIndex = songs.length - 1; // Loop to the last song
+        }
+        changeSong(newIndex, ""); // You can set the artist name here
+    }
+
+    function changeToNextSong() {
+        let newIndex = currentSongIndex + 1;
+        if (newIndex >= songs.length) {
+            newIndex = 0; // Loop to the first song
+        }
+        changeSong(newIndex, ""); // You can set the artist name here
+    }
+
+    // Attach the functions to the previous and next buttons
+    const prevButton = document.querySelector('.controls div:first-child');
+    const nextButton = document.querySelector('.controls div:last-child');
+    prevButton.addEventListener('click', changeToPreviousSong);
+    nextButton.addEventListener('click', changeToNextSong);
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
